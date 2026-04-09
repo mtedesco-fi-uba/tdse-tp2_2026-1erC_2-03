@@ -43,3 +43,10 @@ Utilizar funciones de log como `LOGGER_INFO()` dentro de una de las tareas o en 
     Al tardar más tiempo ejecutando la impresión del log, el contador global de microsegundos registrará un aumento sustancial. El tiempo total de tu ciclo (el "runtime" de la iteración) ya no reflejará el costo computacional real de tus algoritmos, sino el tiempo que el microcontrolador pasó esperando para enviar bytes por el cable.
 
 > **Consejo práctico:** En sistemas de tiempo real, los *logs* deben desactivarse durante las pruebas de rendimiento (profiling), o bien, deben implementarse utilizando técnicas de memoria en anillo (Ring Buffers) no bloqueantes, para que el `WCET` represente puramente la lógica de control.
+
+### Evolución de variables
+NOE: adimensional  
+LET, BCET, WCET: µs  
+  
+<img width="558" height="406" alt="image" src="https://github.com/user-attachments/assets/9b1a089d-b3c8-4da0-9458-970c94217ecb" />
+
