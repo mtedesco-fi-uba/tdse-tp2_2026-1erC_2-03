@@ -49,7 +49,7 @@
 /********************** macros and definitions *******************************/
 #define DEL_LED_MIN		0ul
 #define DEL_LED_MED		250ul
-#define DEL_LED_MAX		500ul
+#define DEL_LED_MAX		300ul
 
 #define ACTUATOR_CFG_QTY	(sizeof(task_actuator_cfg_list)/sizeof(task_actuator_cfg_t))
 #define ACTUATOR_DTA_QTY	ACTUATOR_CFG_QTY
@@ -183,6 +183,7 @@ void task_actuator_statechart(uint32_t index)
 				p_task_actuator_dta->flag = false;
 				HAL_GPIO_WritePin(p_task_actuator_cfg->gpio_port, p_task_actuator_cfg->pin, p_task_actuator_cfg->led_off);
 				p_task_actuator_dta->state = ST_LED_OFF;
+				return;
 			}
 
 			if ((true == p_task_actuator_dta->flag) && (EV_LED_ON == p_task_actuator_dta->event))
@@ -190,6 +191,7 @@ void task_actuator_statechart(uint32_t index)
 				p_task_actuator_dta->flag = false;
 				HAL_GPIO_WritePin(p_task_actuator_cfg->gpio_port, p_task_actuator_cfg->pin, p_task_actuator_cfg->led_on);
 				p_task_actuator_dta->state = ST_LED_ON;
+				return;
 			}
 
 			if (p_task_actuator_dta->tick > DEL_LED_MIN)

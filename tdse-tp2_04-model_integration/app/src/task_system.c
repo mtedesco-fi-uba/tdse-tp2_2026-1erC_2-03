@@ -51,7 +51,7 @@
 /********************** macros and definitions *******************************/
 #define DEL_SYS_MIN			0ul
 #define DEL_SYS_MED			250ul
-#define DEL_SYS_MAX			500ul
+#define DEL_SYS_MAX			1500ul
 
 /* Modes to excite Task System */
 typedef enum task_system_mode {NORMAL, MODE_QTY} task_system_mode_t;
@@ -170,8 +170,8 @@ void task_system_normal_statechart(void)
 			{
 				p_task_system_dta->flag = false;
 				p_task_system_dta->tick = DEL_SYS_MAX;
-				put_event_task_actuator(EV_LED_BARRIER_OPEN_BLINK, ID_LED_A);
-				put_event_task_actuator(EV_LED_BARRIER_CLOSE_OFF, ID_LED_B);
+				put_event_task_actuator(EV_LED_BLINK, ID_LED_A);
+				put_event_task_actuator(EV_LED_OFF, ID_LED_B);
 				p_task_system_dta->state = ST_SYS_WAIT_FOR_BARRIER_OPENED;
 			}
 
@@ -181,9 +181,9 @@ void task_system_normal_statechart(void)
 
 			if (p_task_system_dta->tick > DEL_SYS_MIN)
 			{
-				p_task_system_dta->tick --;
+				p_task_system_dta->tick--;
 			} else {
-				put_event_task_actuator(EV_LED_BARRIER_OPEN_ON, ID_LED_A);
+				put_event_task_actuator(EV_LED_ON, ID_LED_A);
 				p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_LEAVES;
 			}
 
@@ -195,8 +195,8 @@ void task_system_normal_statechart(void)
 			{
 				p_task_system_dta->flag = false;
 				p_task_system_dta->tick = DEL_SYS_MAX;
-				put_event_task_actuator(EV_LED_BARRIER_OPEN_OFF, ID_LED_A);
-				put_event_task_actuator(EV_LED_BARRIER_CLOSE_BLINK, ID_LED_B);
+				put_event_task_actuator(EV_LED_OFF, ID_LED_A);
+				put_event_task_actuator(EV_LED_BLINK, ID_LED_B);
 				p_task_system_dta->state = ST_SYS_WAIT_FOR_BARRIER_CLOSED;
 			}
 
@@ -206,9 +206,9 @@ void task_system_normal_statechart(void)
 
 			if (p_task_system_dta->tick > DEL_SYS_MIN)
 			{
-				p_task_system_dta->tick --;
+				p_task_system_dta->tick--;
 			} else {
-				put_event_task_actuator(EV_LED_BARRIER_CLOSE_ON, ID_LED_B);
+				put_event_task_actuator(EV_LED_ON, ID_LED_B);
 				p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_ARRIVE;
 			}
 
@@ -216,10 +216,11 @@ void task_system_normal_statechart(void)
 
 		default:
 
-			put_event_task_actuator(EV_LED_BARRIER_OPEN_OFF, ID_LED_A);
-			put_event_task_actuator(EV_LED_BARRIER_CLOSE_ON, ID_LED_B);
-			p_task_system_dta->tick  = DEL_SYS_MIN;
-			p_task_system_dta->state = ST_SYS_IDLE;
+			put_event_task_actuator(EV_LED_OFF, ID_LED_A);
+			put_event_task_actuator(EV_LED_ON, ID_LED_B);
+			p_task_system_dta->tick = DEL_SYS_MIN;
+			//p_task_system_dta->state = ST_SYS_IDLE;
+			p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_ARRIVE;
 			p_task_system_dta->event = EV_SYS_IDLE;
 			p_task_system_dta->flag = false;
 

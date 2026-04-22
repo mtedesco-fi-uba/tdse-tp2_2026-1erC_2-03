@@ -166,7 +166,18 @@ void task_sensor_statechart(uint32_t index)
 					p_task_sensor_dta->tick  = DEL_BTN_MIN;
 					p_task_sensor_dta->state = ST_BTN_IDLE;
 				} else if (EV_BTN_DOWN == p_task_sensor_dta->event) {
-					put_event_task_system(p_task_sensor_cfg->signal_down);
+					//put_event_task_system(p_task_sensor_cfg->signal_down);
+					switch(p_task_sensor_cfg->identifier){
+					case ID_BTN_A:
+						put_event_task_system(EV_SYS_CAMERA);
+						break;
+					case ID_BTN_B:
+						put_event_task_system(EV_SYS_BUTTON);
+						break;
+					case ID_BTN_C:
+						put_event_task_system(EV_SYS_SENSOR_COIL);
+						break;
+					}
 					p_task_sensor_dta->tick  = DEL_BTN_MIN;
 					p_task_sensor_dta->state = ST_BTN_ACTIVE;
 				}
